@@ -38,6 +38,8 @@ class form{
 		
 		// set the field class
 		$this->fields[$name] = new inputField($attr, $cuteName, $label);
+		
+		return $this->fields[$name];
 	}
 	
 	public function setSelectField($attr, $cuteName='', $label=false){
@@ -47,7 +49,7 @@ class form{
 		
 		// set the field class
 		$this->fields[$name] = new selectField($attr, $cuteName, $label);
-		return $this->fields[$name]; // Let people quickly run commands on it.
+		return $this->fields[$name];
 	}
 	
 	public function setTextArea($attr, $cuteName='', $label=false){
@@ -57,10 +59,14 @@ class form{
 		
 		// set the field class
 		$this->fields[$name] = new textArea($attr, $cuteName, $label);
+		
+		return $this->fields[$name];
 	}
 	
 	public function setHtmlSnippet($html=''){
 		$this->fields[] = new htmlSnippet($html);
+		
+		return $this->fields[$name];
 	}
 	
 	// Check if the form has been sent.
@@ -86,19 +92,19 @@ class form{
 			if(get_class($value) == 'textArea' || get_class($value) == 'inputField'){
 			
 				// If this is required and it's blank. Set it to flase and return a notice.
-				if(isset($value->attr['required']) && $this->getInputValue($value->attr['name']) == ''){
+				if(isset($value->attr['required']) && $this->getInputValue($value->attr['name']) === ''){
 					$this->setInputValue($value->attr['name']);
 					$notices->add('"'.$value->cuteName.'" field cannot be blank');
 					continue;
 				}
 		
-				if($value->attr['type'] == 'number' && filter_var($this->getInputValue($value->attr['name']), 'FILTER_VALIDATE_FLOAT') == ''){
+				if($value->attr['type'] === 'number' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_FLOAT) === ''){
 					$notices->add('"'.$value->cuteName.'" field must be a number');
 					$this->setInputValue($value->attr['name']);
-				}elseif($value->attr['type'] == 'email' && filter_var($this->getInputValue($value->attr['name']), 'FILTER_VALIDATE_EMAIL') == ''){
+				}elseif($value->attr['type'] === 'email' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_EMAIL) === ''){
 					$notices->add('"'.$value->cuteName.'" field must be an email');
 					$this->setInputValue($value->attr['name']);
-				}elseif($value->attr['type'] == 'regex' && filter_var($this->getInputValue($value->attr['name']), 'FILTER_VALIDATE_REGEXP', array('options'=>array("regexp"=>$value->attr['pattern']))) == ''){
+				}elseif($value->attr['type'] === 'regex' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_REGEXP, array('options'=>array("regexp"=>$value->attr['pattern']))) === ''){
 					$notices->add('"'.$value->cuteName.'" field is invalid');
 					$this->setInputValue($value->attr['name']);
 				}
