@@ -1,0 +1,26 @@
+#### OS Files ####
+._*
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+.DS_Store
+
+#### Environment ####
+/anon_ftp/
+/bin/
+/cgi-bin/
+/conf/
+/dev/
+/error_docs/
+/etc/
+/lib/
+/lib64/
+/logs/
+/pd/
+/private/
+/statistics/
+/tmp/
+/usr/
+/var/
+/web_users/

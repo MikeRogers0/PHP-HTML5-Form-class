@@ -32,7 +32,7 @@ class form{
 	}
 	
 	public function setInputField($attr, $cuteName='', $label=false){
-		$defaults = array('name'=>'field-name', 'type'=>'text', 'value'=>'');
+		$defaults = array('name'=>'field-name', 'type'=>'text', 'value'=>'', 'placeholder'=>'');
 		$attr = array_merge($defaults, parseAStr($attr));
 		$name = $attr['name'];
 		
@@ -53,7 +53,7 @@ class form{
 	}
 	
 	public function setTextArea($attr, $cuteName='', $label=false){
-		$defaults= array('name'=>'field-name', 'type'=>'text', 'value'=>'');
+		$defaults= array('name'=>'field-name', 'type'=>'text', 'value'=>'', 'placeholder'=>'');
 		$attr = array_merge($defaults, parseAStr($attr));
 		$name = $attr['name'];
 		
@@ -91,8 +91,8 @@ class form{
 		if(is_array($this->fields)){foreach($this->fields as $field_key => $value){
 			if(get_class($value) == 'textArea' || get_class($value) == 'inputField'){
 			
-				// If this is required and it's blank. Set it to flase and return a notice.
-				if(isset($value->attr['required']) && $this->getInputValue($value->attr['name']) === ''){
+				// If this is required and it's blank or it is the same as it's placeholder. Set it to flase and return a notice.
+				if(isset($value->attr['required']) && ($this->getInputValue($value->attr['name']) === '' ||  $this->getInputValue($value->attr['name']) === $value->attr['placeholder'])){
 					$this->setInputValue($value->attr['name']);
 					$notices->add('"'.$value->cuteName.'" field cannot be blank');
 					continue;
