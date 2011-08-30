@@ -97,17 +97,28 @@ class form{
 					$notices->add('"'.$value->cuteName.'" field cannot be blank');
 					continue;
 				}
-		
-				if($value->attr['type'] === 'number' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_FLOAT) === ''){
+				// If the field is blank & not required.
+				if(!isset($value->attr['required']) && ($this->getInputValue($value->attr['name']) === '' ||  $this->getInputValue($value->attr['name']) === $value->attr['placeholder'])){
+					continue;
+				}
+				
+				
+				if($value->attr['type'] === 'number' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_FLOAT) === false){
 					$notices->add('"'.$value->cuteName.'" field must be a number');
 					$this->setInputValue($value->attr['name']);
-				}elseif($value->attr['type'] === 'email' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_EMAIL) === ''){
+					continue;
+				}elseif($value->attr['type'] === 'email' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_EMAIL) === false){
 					$notices->add('"'.$value->cuteName.'" field must be an email');
 					$this->setInputValue($value->attr['name']);
-				}elseif($value->attr['type'] === 'regex' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_REGEXP, array('options'=>array("regexp"=>$value->attr['pattern']))) === ''){
+					continue;
+				}elseif($value->attr['type'] === 'regex' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_REGEXP, array('options'=>array("regexp"=>$value->attr['pattern']))) === false){
 					$notices->add('"'.$value->cuteName.'" field is invalid');
 					$this->setInputValue($value->attr['name']);
+					continue;
 				}
+				
+				// The input is valid, so we can put the users input in...
+				$value->attr['value'] = $this->getInputValue($value->attr['name']);
 			
 			}
 		}}
