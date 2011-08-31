@@ -120,6 +120,13 @@ class form{
 				// The input is valid, so we can put the users input in...
 				$value->attr['value'] = $this->getInputValue($value->attr['name']);
 			
+			}elseif(get_class($value) == 'selectField'){
+				if(is_array($value->options)){foreach($value->options as $option_key => $options){ // reset all options ot false;
+						$value->options[$option_key]['selected'] = false;
+					}
+					$value->options[$this->getInputValue($value->attr['name'])]['selected'] = true;
+				}
+				var_dump($value->options);
 			}
 		}}
 		
