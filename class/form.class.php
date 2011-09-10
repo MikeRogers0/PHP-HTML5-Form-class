@@ -199,7 +199,7 @@ class textArea extends inputField{
 		$value = $this->attr['value'];
 		unset($this->attr['value']);
 		
-		$return = '<textarea'.parent::getAttrs($this->attr).'>'.$this->attr['value'].'</textarea>';
+		$return = '<textarea'.parent::getAttrs($this->attr).'>'.$value.'</textarea>';
 		
 		// set $this->attr['value']  agan.
 		$this->attr['value'] = $value;
