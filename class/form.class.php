@@ -107,7 +107,7 @@ class form{
 					$notices->add('"'.$value->cuteName.'" field must be a number');
 					$this->setInputValue($value->attr['name']);
 					continue;
-				}elseif($value->attr['type'] === 'email' && filter_var($this->getInputValue($value->attr['name']), FILTER_VALIDATE_EMAIL) === false){
+				}elseif($value->attr['type'] === 'email' && $this->validateEmail($this->getInputValue($value->attr['name'])) === false){
 					$notices->add('"'.$value->cuteName.'" field must be an email');
 					$this->setInputValue($value->attr['name']);
 					continue;
@@ -126,7 +126,6 @@ class form{
 					}
 					$value->options[$this->getInputValue($value->attr['name'])]['selected'] = true;
 				}
-				var_dump($value->options);
 			}
 		}}
 		
@@ -134,6 +133,16 @@ class form{
 			return false;
 		}
 		return true;
+	}
+	
+	public function validateEmail($email){
+		if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
+			return false;
+		}
+		
+		// Next check the domain is real.
+		$domain = explode("@", $email, 2);
+		return checkdnsrr($domain[1]); // returns TRUE/FALSE;
 	}
 	
 	public function getInputValue($name){
