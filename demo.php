@@ -24,12 +24,12 @@ $myForm->setInputField(array('name'=>'your-name', 'required'=>true), 'Your Name'
 $myForm->setInputField(array('name'=>'your-email', 'type'=>'email'), 'Your Email (Optional)', true);
 
 // This is a select field.
-$options = $myForm->setSelectField(array('name'=>'your-gender'), 'Your Gender', TRUE);
+$options = $myForm->setSelectField(array('name'=>'your-gender', 'value'=>'female'), 'Your Gender', TRUE);
 // You can add options like this:
-$options->addOption('male', 'Male', false);
+$options->addOption('male', 'Male');
 // Or if you don't want to create a new variable, like this:
-$myForm->fields['your-gender']->addOption('female', 'Female', false);
-$myForm->fields['your-gender']->addOption('other', 'Other', true);
+$myForm->fields['your-gender']->addOption('female', 'Female');
+$myForm->fields['your-gender']->addOption('other', 'Other');
 
 $myForm->setInputField(array('name'=>'submit', 'value'=>'Submit', 'type'=>'Submit'));
 

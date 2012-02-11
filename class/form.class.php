@@ -2,6 +2,7 @@
 
 /**
  * Form makes/validates forms
+ * V1.0
  *
  * This generates HTML5 forms & validates them.
  *
@@ -43,7 +44,7 @@ class form{
 	}
 	
 	public function setSelectField($attr, $cuteName='', $label=false){
-		$defaults = array('name'=>'field-name');
+		$defaults = array('name'=>'field-name', 'value'=>'');
 		$attr = array_merge($defaults, parseAStr($attr));
 		$name = $attr['name'];
 		
@@ -225,10 +226,14 @@ class selectField extends inputField{
 	public $options;
 
 	public function addOption($option, $displayName, $selected=false){
+		if($this->attr['value'] == $option){
+			$selected = true;
+		}
 		$this->options[$option] = array('displayName'=>$displayName, 'selected'=>$selected);
 	}
 
 	public function getHTML(){
+		unset($this->attr['value']); // Remove the value attr
 		
 		$return = '<select'.parent::getAttrs($this->attr).'>';
 		
