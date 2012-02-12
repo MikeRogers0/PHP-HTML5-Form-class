@@ -30,6 +30,13 @@ class form{
 
 		// Set a hidden field to figure out if this form has been posted.
 		$this->setInputField(array('name'=>$this->form_attr['name'], 'type'=>'hidden', 'value'=>'true'));
+		
+		// quickly stripslashes from post data:
+		if(is_array($_POST)){
+			foreach($_POST as $key => $value){
+				$_POST[$key] = stripslashes($value);
+			}
+		}
 	}
 	
 	public function setInputField($attr, $cuteName='', $label=false){
