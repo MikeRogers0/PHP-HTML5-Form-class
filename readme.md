@@ -1,4 +1,4 @@
-This is intended to simple HTML5 forms, you may want to consider Zend_Form http://framework.zend.com/manual/1.12/en/zend.form.quickstart.html for making something a little more complex.
+This is intended to simple HTML5 forms, you may want to consider Zend_Form http://framework.zend.com/manual/2.0/en/modules/zend.form.quick-start.html for making something a little more complex.
 
 ## Building & displaying the form
 
