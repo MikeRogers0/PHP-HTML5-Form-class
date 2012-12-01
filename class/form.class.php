@@ -214,10 +214,12 @@ class inputField{
 	}
 	
 	public function addWrapper(){
-		if($this->label != false){
-			$this->html = '<label for="'.$this->attr['id'].'">'.$this->cuteName.'</label><div>'.$this->html.'</div>';
-		}
-	}
+        $label = '';
+        if($this->label != false){
+            $label = '<label for="'.$this->attr['id'].'">'.$this->cuteName.'</label>';
+        }
+        $this->html = $label.'<div class="element">'.$this->html.'</div>';
+    }
 }
 
 class textArea extends inputField{
