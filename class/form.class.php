@@ -174,16 +174,18 @@ class mr_form{
 	}
 	
 	public function getAttrs($attrs){
-		$return = '';
-		if(is_array($attrs)){foreach($attrs as $key => $value){
-			if(is_bool($value)){
-				$return .= ' '.$key;
-			}else{
-				$return .= ' '.$key.'="'.$value.'"';
-			}
-		}}
-		return $return;
-	}
+        $return = '';
+        if(is_array($attrs)){foreach($attrs as $key => $value){
+            if(is_bool($value)) {
+                if ($value === true){
+                    $return .= ' '.$key;
+                }
+            }else{
+                $return .= ' '.$key.'="'.$value.'"';
+            }
+        }}
+        return $return;
+    }
 	
 	public function display($echo=true){
 		$return = '<form'.$this->getAttrs($this->form_attr).'>';
