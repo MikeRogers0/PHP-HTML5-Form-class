@@ -21,7 +21,9 @@ $myForm = new mr_form();
 $myForm->setInputField(array('name'=>'your-name', 'required'=>true), 'Your Name', true);
 
 // This is an email field.
-$myForm->setInputField(array('name'=>'your-email', 'type'=>'email'), 'Your Email (Optional)', true);
+$myForm->setInputField(array('name'=>'emails[]', 'type'=>'email', 'placeholder'=>'you@mail.com'), 'Your Email 1 (Optional)', true);
+
+$myForm->setInputField(array('name'=>'emails[]', 'type'=>'email', 'placeholder'=>'you@mail.com'), 'Your Email 2 (Optional)', true);
 
 // This is a select field.
 $options = $myForm->setSelectField(array('name'=>'your-gender', 'value'=>'female'), 'Your Gender', TRUE);
@@ -30,6 +32,10 @@ $options->addOption('male', 'Male');
 // Or if you don't want to create a new variable, like this:
 $myForm->fields['your-gender']->addOption('female', 'Female');
 $myForm->fields['your-gender']->addOption('other', 'Other');
+
+$radio = $myForm->setRadioField(array('name'=>'type_new', 'required'=>false), 'New or Existing test', true);
+$radio->addOption('1', 'This is a new test that we still have to do');
+$radio->addOption('2', 'This is a test we already did but want to document insights');
 
 $myForm->setTextArea(array('name'=>'your-comments'), 'Comments', true);
 

@@ -10,6 +10,10 @@ form > label, form > div{
 	display:block;
 	margin:15px 0 5px 0;
 }
+form > .element{
+	width:100%;
+}
+
 input,select, textarea{
 	padding: 3px 5px;
 	float:left;

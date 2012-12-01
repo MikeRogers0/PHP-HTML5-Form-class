@@ -33,10 +33,20 @@ class mr_form{
 		
 		// quickly stripslashes from post data:
 		if(is_array($_POST)){
-			foreach($_POST as $key => $value){
-				$_POST[$key] = stripslashes($value);
+			mr_form::sanitizeFields($_POST);
+		}
+	}
+	
+	public static function sanitizeFields($post){
+		foreach($post as $key => $value){
+			if(is_array($post[$key])){
+				$post[$key] = mr_form::sanitizeFields($post[$key]);
+			}else {
+				$post[$key] = stripslashes($value);
 			}
 		}
+		
+		return $post;
 	}
 	
 	public function setInputField($attr, $cuteName='', $label=false){
@@ -45,6 +55,14 @@ class mr_form{
 		
 		// set the field class
 		return $this->fields[$attr['name']] = new inputField($attr, $cuteName, $label);
+	}
+	
+	public function setRadioField($attr, $cuteName='', $label=false){
+		$defaults = array('name'=>'field-name', 'type'=>'text', 'value'=>'', 'placeholder'=>'');
+		$attr = $this->mergeAttr($defaults, $attr);
+		
+		// set the field class
+		return $this->fields[$attr['name']] = new radioField($attr, $cuteName, $label);
 	}
 	
 	public function setSelectField($attr, $cuteName='', $label=false){
@@ -277,5 +295,30 @@ class htmlSnippet{
 	}
 }
 
+class radioField extends inputField{
+    public $options;
+
+    public function addOption($value, $description, $checked = false){
+        if($this->attr['value'] == $value){
+            $checked = true;
+        }
+        $this->options[$value] = array('value'=>$value, 'description'=>$description, 'checked'=>$checked);
+    }
+
+    public function getHTML(){
+        unset($this->attr['value']); // Remove the value attr
+        // Cycle through the options
+        if(is_array($this->options)){foreach($this->options as $option => $values){
+
+            $this->html .= '<div class="option"><input type="radio" value="'.$values['value'].'" '.mr_form::getAttrs($this->attr).(($values['checked'] == false) ? '' : ' checked').'/>&nbsp;'.$values['description'].'</div>';
+
+        }}
+
+        $this->addWrapper();
+        return $this->html;
+    }
+}
+
+// Uncomment for backward compatability.
 //class form extends mr_form{};
 ?>
