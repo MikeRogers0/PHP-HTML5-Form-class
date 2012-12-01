@@ -14,7 +14,7 @@ include('class/form.class.php');
 
 // Set up the classes.
 $notices = new notices();
-$myForm = new form();
+$myForm = new mr_form();
 
 // Add some fields to the form.
 // This is a standard text input field, with a label of "Your Name"

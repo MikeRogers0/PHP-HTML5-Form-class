@@ -19,7 +19,7 @@
  *
  * @author Mike Rogers <mike.r@fullondesign.co.uk>
  */
-class form{
+class mr_form{
 	public $fields,  $form_attr, $attr;
 	private $form_method;
 	
@@ -206,7 +206,7 @@ class inputField{
 	}
 	
 	public function getHTML(){
-		$this->html = '<input'.form::getAttrs($this->attr).'/>';
+		$this->html = '<input'.mr_form::getAttrs($this->attr).'/>';
 		$this->addWrapper();
 		return $this->html;
 	}
@@ -225,7 +225,7 @@ class textArea extends inputField{
 		$value = $this->attr['value'];
 		unset($this->attr['value']);
 		
-		$this->html = '<textarea'.form::getAttrs($this->attr).'>'.$value.'</textarea>';
+		$this->html = '<textarea'.mr_form::getAttrs($this->attr).'>'.$value.'</textarea>';
 		
 		// set $this->attr['value']  agan.
 		$this->attr['value'] = $value;
@@ -248,7 +248,7 @@ class selectField extends inputField{
 	public function getHTML(){
 		unset($this->attr['value']); // Remove the value attr
 		
-		$this->html = '<select'.form::getAttrs($this->attr).'>';
+		$this->html = '<select'.mr_form::getAttrs($this->attr).'>';
 		
 		// Cycle through the options
 		if(is_array($this->options)){foreach($this->options as $option => $values){
@@ -272,4 +272,6 @@ class htmlSnippet{
 		return $this->html;
 	}
 }
+
+//class form extends mr_form{};
 ?>

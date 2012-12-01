@@ -4,7 +4,7 @@ This is intended to simple HTML5 forms, you may want to consider Zend_Form http:
 
 To create the form, call the class.
 
-`$myForm = new form();`
+`$myForm = new mr_form();`
 
 then add a few inputs
 
